@@ -39,7 +39,8 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.lottie)
+    implementation(libs.github.colorpickerview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

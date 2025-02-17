@@ -1,18 +1,35 @@
 package samuelnunes.com.anycubicnfcwritter
 
+import android.util.Log
 
-fun hexToRgb(rgbOriginal: String): Triple<String, String, String> {
-    val r = rgbOriginal.substring(0, 2).uppercase()
-    val g = rgbOriginal.substring(2, 4).uppercase()
-    val b = rgbOriginal.substring(4, 6).uppercase()
-    return Triple(r, g, b)
+
+
+const val FILAMENT_DIAM = 1.75
+const val HOTEND_TEMP_MIN = 240
+const val HOTEND_TEMP_MAX = 260
+const val BED_TEMP_MIN = 90
+const val BED_TEMP_MAX = 115
+
+data class ARGB(val a: Int, val r: Int, val g: Int, val b: Int) {
+    constructor(array: IntArray) : this(array[0],array[1],array[2],array[3])
 }
 
-fun nfcMapper(hexColor: String, material: String= "PLA+"): String {
-    val rgbOriginal: String = hexColor.removePrefix("#")
-    val (r, g, b) = hexToRgb(rgbOriginal)
+data class Spool(
+    val hexColor: ARGB,
+    val material: String,
+    val filamentDiam: Double = FILAMENT_DIAM,
+    val hotendTempMin: Int = HOTEND_TEMP_MIN,
+    val hotendTempMax: Int = HOTEND_TEMP_MAX,
+    val bedTempMin: Int = BED_TEMP_MIN,
+    val bedTempMax: Int = BED_TEMP_MAX
+)
 
-    val materialName = material.map { it.code.toString(16).uppercase() }.toMutableList()
+
+fun nfcMapper(spool: Spool): String {
+    Log.i("NFC Data", "Spool: $spool")
+    val (a, r, g, b) = spool.hexColor
+
+    val materialName = spool. material.map { it.code.toHex() }.toMutableList()
     while (materialName.size < 20) {
         materialName.add("00")
     }
@@ -34,17 +51,17 @@ fun nfcMapper(hexColor: String, material: String= "PLA+"): String {
         A2:11:${materialName[8]}:${materialName[9]}:${materialName[10]}:${materialName[11]},
         A2:12:${materialName[12]}:${materialName[13]}:${materialName[14]}:${materialName[15]},
         A2:13:${materialName[16]}:${materialName[17]}:${materialName[18]}:${materialName[19]},
-        A2:14:FF:$b:$g:$r,
+        A2:14:${a.toHex()}:${b.toHex()}:${g.toHex()}:${r.toHex()},
         A2:15:00:00:00:00,
         A2:16:00:00:00:00,
         A2:17:32:00:64:00,
-        A2:18:CD:00:D7:00,
+        A2:18:${HOTEND_TEMP_MIN.toHex()}:00:${HOTEND_TEMP_MAX.toHex()}:00,
         A2:19:00:00:00:00,
         A2:1A:00:00:00:00,
         A2:1B:00:00:00:00,
         A2:1C:00:00:00:00,
-        A2:1D:32:00:3C:00,
-        A2:1E:AF:00:4A:01,
+        A2:1D:${BED_TEMP_MIN.toHex()}:00:${BED_TEMP_MAX.toHex()}:00,
+        A2:1E:${(FILAMENT_DIAM * 100).toInt().toHex()}:00:4A:01,
         A2:1F:E8:03:00:00,
         A2:20:00:00:00:00,
         A2:21:00:00:00:00,
@@ -61,5 +78,8 @@ fun nfcMapper(hexColor: String, material: String= "PLA+"): String {
         A2:2C:00:00:00:00
     """.trimIndent()
 
+    Log.i("NFC Data", hexStuff)
     return hexStuff
 }
+
+fun Int.toHex(): String = this.toString(16).uppercase()
