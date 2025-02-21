@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:padding="16dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,15 +37,6 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <TextView
-                android:id="@+id/tag_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fill in the fields above and bring the tag closer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
             <com.skydoves.colorpickerview.ColorPickerView
                 android:id="@+id/hexColor"
                 android:layout_width="300dp"
@@ -52,13 +44,13 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tag_description" />
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
             <com.skydoves.colorpickerview.sliders.AlphaSlideBar
                 android:id="@+id/alphaSlideBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="32dp"
+                android:layout_margin="16dp"
                 app:borderColor_AlphaSlideBar="@color/cardview_dark_background"
                 app:borderSize_AlphaSlideBar="5"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,14 +58,51 @@
                 app:layout_constraintTop_toBottomOf="@+id/hexColor"
                 app:selector_AlphaSlideBar="@drawable/colorpickerview_wheel" />
 
+            <com.skydoves.colorpickerview.sliders.BrightnessSlideBar
+                android:id="@+id/brightnessSlideBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:borderColor_BrightnessSlider="@color/cardview_dark_background"
+                app:borderSize_BrightnessSlider="5"
+                app:layout_constraintEnd_toEndOf="@+id/alphaSlideBar"
+                app:layout_constraintStart_toStartOf="@+id/alphaSlideBar"
+                app:layout_constraintTop_toBottomOf="@+id/alphaSlideBar"
+                app:selector_BrightnessSlider="@drawable/colorpickerview_wheel" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_color"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="HexColor"
+                app:boxStrokeWidthFocused="2dp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/alphaTileView"
+                app:layout_constraintTop_toBottomOf="@+id/brightnessSlideBar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_color"
+                    style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="9"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.skydoves.colorpickerview.AlphaTileView
                 android:id="@+id/alphaTileView"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="32dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_material"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_color"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_material"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toTopOf="@+id/tv_color"
                 app:tileEvenColor="@color/white"
                 app:tileOddColor="@color/black"
                 app:tileSize="20" />
@@ -83,12 +112,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
                 android:hint="Material Name"
                 app:boxStrokeWidthFocused="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/alphaTileView"
-                app:layout_constraintTop_toBottomOf="@+id/alphaSlideBar">
+                app:layout_constraintEnd_toEndOf="@+id/tv_color"
+                app:layout_constraintStart_toStartOf="@+id/alphaTileView"
+                app:layout_constraintTop_toBottomOf="@+id/tv_color">
 
                 <AutoCompleteTextView
                     android:id="@+id/tv_material_name"
@@ -96,11 +125,225 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters"
-                    android:maxLength="4" />
+                    android:maxLength="20" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/label_speed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Printing Speed mm/s"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_material" />
 
+            <TextView
+                android:id="@+id/tv_speed_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="50 - 150 mm/s"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_speed" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_speed_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:stepSize="1"
+                android:valueFrom="50"
+                android:valueTo="149"
+                app:labelBehavior="floating"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_speed_min"
+                app:values="@array/initial_speed_slider_values" />
+
+            <TextView
+                android:id="@+id/tv_speed_med"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="151 - 299 mm/s"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/slide_speed_min" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_speed_med"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="4"
+                android:layout_column="0"
+                android:gravity="center"
+                android:stepSize="1"
+                android:valueFrom="150"
+                android:valueTo="299"
+                app:labelBehavior="floating"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_speed_med"
+                app:values="@array/med_speed_slider_values" />
+
+            <TextView
+                android:id="@+id/tv_speed_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="300 - 600 mm/s"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/slide_speed_med" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_speed_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="6"
+                android:layout_column="0"
+                android:gravity="center"
+                android:stepSize="1"
+                android:valueFrom="300"
+                android:valueTo="700"
+                app:labelBehavior="floating"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_speed_max"
+                app:values="@array/final_speed_slider_values" />
+
+            <TextView
+                android:id="@+id/label_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Hotend Temp °C"
+                app:layout_constraintBottom_toBottomOf="@+id/label_speed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/label_speed" />
+
+            <TextView
+                android:id="@+id/tv_temp_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="190 - 210 °C"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_speed_min"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/tv_speed_min" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_temp_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:stepSize="1"
+                android:valueFrom="170"
+                android:valueTo="310"
+                app:labelBehavior="floating"
+                app:layout_constraintBottom_toBottomOf="@+id/slide_speed_min"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/slide_speed_min"
+                app:layout_constraintVertical_bias="0.0"
+                app:values="@array/temp_slider_values" />
+
+            <TextView
+                android:id="@+id/tv_temp_med"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="210 - 230 °C"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_speed_med"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/tv_speed_med" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_temp_med"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:stepSize="1"
+                android:valueFrom="170"
+                android:valueTo="310"
+                app:labelBehavior="floating"
+                app:layout_constraintBottom_toBottomOf="@+id/slide_speed_med"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/slide_speed_med"
+                app:values="@array/temp_slider_values" />
+
+            <TextView
+                android:id="@+id/tv_temp_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="230 - 260 °C"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_speed_max"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/tv_speed_max" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_temp_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:stepSize="1"
+                android:valueFrom="170"
+                android:valueTo="310"
+                app:labelBehavior="floating"
+                app:layout_constraintBottom_toBottomOf="@+id/slide_speed_max"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_center"
+                app:layout_constraintTop_toTopOf="@+id/slide_speed_max"
+                app:values="@array/temp_slider_values" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tv_bed_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Bed Temperature: 50°C - 60 °C"
+                app:layout_constraintEnd_toEndOf="@+id/slide_temp_max"
+                app:layout_constraintStart_toStartOf="@+id/slide_speed_max"
+                app:layout_constraintTop_toBottomOf="@+id/slide_speed_max" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slide_bed_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:stepSize="5"
+                android:valueFrom="0"
+                android:valueTo="120"
+                app:labelBehavior="floating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_bed_temp"
+                app:values="@array/bed_temp_slider_values" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

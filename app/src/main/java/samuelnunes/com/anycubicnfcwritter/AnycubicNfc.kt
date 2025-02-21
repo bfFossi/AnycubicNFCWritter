@@ -17,13 +17,24 @@ data class ARGB(val a: Int, val r: Int, val g: Int, val b: Int) {
 data class Spool(
     val hexColor: ARGB,
     val material: String,
-    val filamentDiam: Double = FILAMENT_DIAM,
-    val hotendTempMin: Int = HOTEND_TEMP_MIN,
-    val hotendTempMax: Int = HOTEND_TEMP_MAX,
-    val bedTempMin: Int = BED_TEMP_MIN,
-    val bedTempMax: Int = BED_TEMP_MAX
+    val firstIntervalHotendTemp: HotEndTemperature,
+    val secondIntervalHotendTemp: HotEndTemperature,
+    val thirdIntervalHotendTemp: HotEndTemperature,
+    val bedTemp: BedTemperature,
+    val filamentDiam: Double = FILAMENT_DIAM
 )
 
+data class HotEndTemperature(
+    val speedMin: Float,
+    val speedMax: Float,
+    val temperatureMin: Float,
+    val temperatureMax: Float
+)
+
+data class BedTemperature(
+    val temperatureMin: Float,
+    val temperatureMax: Float
+)
 
 fun nfcMapper(spool: Spool): String {
     Log.i("NFC Data", "Spool: $spool")
@@ -54,13 +65,13 @@ fun nfcMapper(spool: Spool): String {
         A2:14:${a.toHex()}:${b.toHex()}:${g.toHex()}:${r.toHex()},
         A2:15:00:00:00:00,
         A2:16:00:00:00:00,
-        A2:17:32:00:64:00,
-        A2:18:${HOTEND_TEMP_MIN.toHex()}:00:${HOTEND_TEMP_MAX.toHex()}:00,
-        A2:19:00:00:00:00,
-        A2:1A:00:00:00:00,
-        A2:1B:00:00:00:00,
-        A2:1C:00:00:00:00,
-        A2:1D:${BED_TEMP_MIN.toHex()}:00:${BED_TEMP_MAX.toHex()}:00,
+        A2:17:${spool.firstIntervalHotendTemp.speedMin.toHex()}:00:${spool.firstIntervalHotendTemp.speedMax.toHex()}:00,
+        A2:18:${spool.firstIntervalHotendTemp.temperatureMin.toHex()}:00:${spool.firstIntervalHotendTemp.temperatureMin.toHex()}:00,
+        A2:19:${spool.secondIntervalHotendTemp.speedMin.toHex()}:00:${spool.secondIntervalHotendTemp.speedMax.toHex()}:00,
+        A2:1A:${spool.secondIntervalHotendTemp.temperatureMin.toHex()}:00:${spool.secondIntervalHotendTemp.temperatureMin.toHex()}:00,
+        A2:1B:${spool.thirdIntervalHotendTemp.speedMin.toHex()}:00:${spool.thirdIntervalHotendTemp.speedMax.toHex()}:00,
+        A2:1C:${spool.thirdIntervalHotendTemp.temperatureMin.toHex()}:00:${spool.thirdIntervalHotendTemp.temperatureMin.toHex()}:00,
+        A2:1D:${spool.bedTemp.temperatureMin.toHex()}:00:${spool.bedTemp.temperatureMax.toHex()}:00,
         A2:1E:${(FILAMENT_DIAM * 100).toInt().toHex()}:00:4A:01,
         A2:1F:E8:03:00:00,
         A2:20:00:00:00:00,
@@ -83,3 +94,4 @@ fun nfcMapper(spool: Spool): String {
 }
 
 fun Int.toHex(): String = this.toString(16).uppercase()
+fun Float.toHex(): String = this.toInt().toHex()

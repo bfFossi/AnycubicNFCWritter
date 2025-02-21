@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="initial_speed_slider_values">
+        <item>50.0</item>
+        <item>100.0</item>
+    </array>
+    <array name="med_speed_slider_values">
+        <item>150.0</item>
+        <item>299.0</item>
+    </array>
+    <array name="final_speed_slider_values">
+        <item>300.0</item>
+        <item>600.0</item>
+    </array>
+
+    <array name="temp_slider_values">
+        <item>190.0</item>
+        <item>230.0</item>
+    </array>
+
+    <array name="bed_temp_slider_values">
+        <item>50.0</item>
+        <item>60.0</item>
+    </array>
+</resources>
