@@ -9,14 +9,14 @@ import android.nfc.Tag
 import android.nfc.tech.NfcA
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
 import com.skydoves.colorpickerview.flag.BubbleFlag
 import samuelnunes.com.anycubicnfcwritter.databinding.ActivityMainBinding
 
@@ -94,6 +94,25 @@ class MainActivity : AppCompatActivity() {
 
             slideBedTemp.addOnChangeListener(updateBedTemperatureLabel(tvBedTemp))
 
+            switchSpeedMed.setOnCheckedChangeListener { buttonView, isChecked ->
+                slideSpeedMed.isVisible = isChecked;
+                tvSpeedMed.isVisible = isChecked;
+                slideTempMed.isVisible = isChecked;
+                tvTempMed.isVisible = isChecked;
+                changeStateFAB();
+            }
+
+            switchSpeedMax.setOnCheckedChangeListener { buttonView, isChecked ->
+                slideSpeedMax.isVisible = isChecked;
+                tvSpeedMax.isVisible = isChecked;
+                slideTempMax.isVisible = isChecked;
+                tvTempMax.isVisible = isChecked;
+                changeStateFAB();
+            }
+
+            switchSpeedMed.isChecked = true;
+            switchSpeedMax.isChecked = true;
+
             val materialNames = listOf("ABS", "ASA", "HIPS", "PETG", "PLA", "PLA+", "TPU")
             val adapter = ArrayAdapter(this@MainActivity, R.layout.simple_dropdown_item_1line, materialNames)
             tvMaterialName.setAdapter(adapter)
@@ -129,6 +148,8 @@ class MainActivity : AppCompatActivity() {
             val text = "Bed Temperature: ${values[0].toInt()} °C - ${values[1].toInt()} °C"
             tvLabel.text = text
         }
+
+
 
 
     override fun onResume() {
@@ -167,18 +188,21 @@ class MainActivity : AppCompatActivity() {
                 hexColor = it,
                 material = material,
                 firstIntervalHotendTemp = HotEndTemperature(
+                    enabled = true,
                     speedMin = binding.slideSpeedMin.values[0],
                     speedMax = binding.slideSpeedMin.values[1],
                     temperatureMin = binding.slideTempMin.values[0],
                     temperatureMax = binding.slideTempMin.values[1]
                 ),
                 secondIntervalHotendTemp = HotEndTemperature(
+                    enabled = binding.switchSpeedMed.isChecked,
                     speedMin = binding.slideSpeedMed.values[0],
                     speedMax = binding.slideSpeedMed.values[1],
                     temperatureMin = binding.slideTempMed.values[0],
                     temperatureMax = binding.slideTempMed.values[1]
                 ),
                 thirdIntervalHotendTemp = HotEndTemperature(
+                    enabled =  binding.switchSpeedMax.isChecked,
                     speedMin = binding.slideSpeedMax.values[0],
                     speedMax = binding.slideSpeedMax.values[1],
                     temperatureMin = binding.slideTempMax.values[0],

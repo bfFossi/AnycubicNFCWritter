@@ -101,7 +101,7 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_color"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintTop_toTopOf="@+id/tv_color"
                 app:tileEvenColor="@color/white"
                 app:tileOddColor="@color/black"
@@ -112,7 +112,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="2dp"
                 android:hint="Material Name"
                 app:boxStrokeWidthFocused="2dp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_color"
@@ -166,6 +166,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_speed_min"
                 app:values="@array/initial_speed_slider_values" />
 
+            <Switch
+                android:id="@+id/switch_speed_med"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="2nd enable"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/slide_speed_min" />
+
             <TextView
                 android:id="@+id/tv_speed_med"
                 android:layout_width="0dp"
@@ -175,7 +186,7 @@
                 android:text="151 - 299 mm/s"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_center"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/slide_speed_min" />
+                app:layout_constraintTop_toBottomOf="@id/switch_speed_med" />
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/slide_speed_med"
@@ -204,7 +215,7 @@
                 android:text="300 - 600 mm/s"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_center"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/slide_speed_med" />
+                app:layout_constraintTop_toBottomOf="@id/switch_speed_max" />
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/slide_speed_max"
@@ -261,13 +272,24 @@
                 app:layout_constraintVertical_bias="0.0"
                 app:values="@array/temp_slider_values" />
 
+            <Switch
+                android:id="@+id/switch_speed_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="3rd enable"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/slide_speed_med" />
+
             <TextView
                 android:id="@+id/tv_temp_med"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="210 - 230 °C"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_speed_med"
+                app:layout_constraintBottom_toBottomOf="@id/switch_speed_max"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/guideline_center"
                 app:layout_constraintTop_toTopOf="@+id/tv_speed_med" />

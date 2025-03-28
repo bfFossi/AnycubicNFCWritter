@@ -14,6 +14,8 @@ data class ARGB(val a: Int, val r: Int, val g: Int, val b: Int) {
     constructor(array: IntArray) : this(array[0],array[1],array[2],array[3])
 }
 
+var secondMask : Int = 0
+
 data class Spool(
     val hexColor: ARGB,
     val material: String,
@@ -25,7 +27,8 @@ data class Spool(
 )
 
 data class HotEndTemperature(
-    val speedMin: Float,
+    val enabled : Boolean,
+    var speedMin: Float,
     val speedMax: Float,
     val temperatureMin: Float,
     val temperatureMax: Float
@@ -65,13 +68,13 @@ fun nfcMapper(spool: Spool): String {
         A2:14:${a.toHex()}:${b.toHex()}:${g.toHex()}:${r.toHex()},
         A2:15:00:00:00:00,
         A2:16:00:00:00:00,
-        A2:17:${spool.firstIntervalHotendTemp.speedMin.toHex()}:00:${spool.firstIntervalHotendTemp.speedMax.toHex()}:00,
-        A2:18:${spool.firstIntervalHotendTemp.temperatureMin.toHex()}:00:${spool.firstIntervalHotendTemp.temperatureMin.toHex()}:00,
-        A2:19:${spool.secondIntervalHotendTemp.speedMin.toHex()}:00:${spool.secondIntervalHotendTemp.speedMax.toHex()}:00,
-        A2:1A:${spool.secondIntervalHotendTemp.temperatureMin.toHex()}:00:${spool.secondIntervalHotendTemp.temperatureMin.toHex()}:00,
-        A2:1B:${spool.thirdIntervalHotendTemp.speedMin.toHex()}:00:${spool.thirdIntervalHotendTemp.speedMax.toHex()}:00,
-        A2:1C:${spool.thirdIntervalHotendTemp.temperatureMin.toHex()}:00:${spool.thirdIntervalHotendTemp.temperatureMin.toHex()}:00,
-        A2:1D:${spool.bedTemp.temperatureMin.toHex()}:00:${spool.bedTemp.temperatureMax.toHex()}:00,
+        A2:17:${spool.firstIntervalHotendTemp.speedMin.toHexH(spool.firstIntervalHotendTemp.enabled)}:${spool.firstIntervalHotendTemp.speedMax.toHexH(spool.firstIntervalHotendTemp.enabled)},
+        A2:18:${spool.firstIntervalHotendTemp.temperatureMin.toHexH(spool.firstIntervalHotendTemp.enabled)}:${spool.firstIntervalHotendTemp.temperatureMin.toHexH(spool.firstIntervalHotendTemp.enabled)},
+        A2:19:${spool.secondIntervalHotendTemp.speedMin.toHexH(spool.secondIntervalHotendTemp.enabled)}:${spool.secondIntervalHotendTemp.speedMax.toHexH(spool.secondIntervalHotendTemp.enabled)},        
+        A2:1A:${spool.secondIntervalHotendTemp.temperatureMin.toHexH(spool.secondIntervalHotendTemp.enabled)}:${spool.secondIntervalHotendTemp.temperatureMin.toHexH(spool.secondIntervalHotendTemp.enabled)},
+        A2:1B:${spool.thirdIntervalHotendTemp.speedMin.toHexH(spool.thirdIntervalHotendTemp.enabled)}:${spool.thirdIntervalHotendTemp.speedMax.toHexH(spool.thirdIntervalHotendTemp.enabled)},
+        A2:1C:${spool.thirdIntervalHotendTemp.temperatureMin.toHexH(spool.thirdIntervalHotendTemp.enabled)}:${spool.thirdIntervalHotendTemp.temperatureMin.toHexH(spool.thirdIntervalHotendTemp.enabled)},
+        A2:1D:${spool.bedTemp.temperatureMin.toHexH(true)}:${spool.bedTemp.temperatureMax.toHexH(true)},
         A2:1E:${(FILAMENT_DIAM * 100).toInt().toHex()}:00:4A:01,
         A2:1F:E8:03:00:00,
         A2:20:00:00:00:00,
@@ -94,4 +97,13 @@ fun nfcMapper(spool: Spool): String {
 }
 
 fun Int.toHex(): String = this.toString(16).uppercase()
-fun Float.toHex(): String = this.toInt().toHex()
+
+fun Float.toHexH(enabled:Boolean): String {
+    if (enabled) {
+        var value : Int = this.toInt()
+        var testL : String = "%02x".format((value and 0xFF))
+        var testH : String = "%02x".format(( (value shr(8)) and 0xFF) )
+        return testL+":"+testH
+    } else {return "00:00"}
+}
+
