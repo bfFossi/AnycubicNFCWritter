@@ -69,7 +69,7 @@ fun nfcMapper(spool: Spool): String {
         A2:15:00:00:00:00,
         A2:16:00:00:00:00,
         A2:17:${spool.firstIntervalHotendTemp.speedMin.toHexH(spool.firstIntervalHotendTemp.enabled)}:${spool.firstIntervalHotendTemp.speedMax.toHexH(spool.firstIntervalHotendTemp.enabled)},
-        A2:18:${spool.firstIntervalHotendTemp.temperatureMin.toHexH(spool.firstIntervalHotendTemp.enabled)}:${spool.firstIntervalHotendTemp.temperatureMin.toHexH(spool.firstIntervalHotendTemp.enabled)},
+        A2:18:${spool.firstIntervalHotendTemp.temperatureMin.toHexH(spool.firstIntervalHotendTemp.enabled)}:${spool.firstIntervalHotendTemp.temperatureMax.toHexH(spool.firstIntervalHotendTemp.enabled)},
         A2:19:${spool.secondIntervalHotendTemp.speedMin.toHexH(spool.secondIntervalHotendTemp.enabled)}:${spool.secondIntervalHotendTemp.speedMax.toHexH(spool.secondIntervalHotendTemp.enabled)},        
         A2:1A:${spool.secondIntervalHotendTemp.temperatureMin.toHexH(spool.secondIntervalHotendTemp.enabled)}:${spool.secondIntervalHotendTemp.temperatureMin.toHexH(spool.secondIntervalHotendTemp.enabled)},
         A2:1B:${spool.thirdIntervalHotendTemp.speedMin.toHexH(spool.thirdIntervalHotendTemp.enabled)}:${spool.thirdIntervalHotendTemp.speedMax.toHexH(spool.thirdIntervalHotendTemp.enabled)},

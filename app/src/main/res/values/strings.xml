@@ -6,6 +6,10 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="hex_color">HexColor</string>
+    <string name="mat_name">MaterialName</string>
+    <string name="bedTemperature">Bed Temperature: 50°C - 60 °C</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
