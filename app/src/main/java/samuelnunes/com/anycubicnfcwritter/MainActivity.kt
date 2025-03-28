@@ -95,23 +95,23 @@ class MainActivity : AppCompatActivity() {
             slideBedTemp.addOnChangeListener(updateBedTemperatureLabel(tvBedTemp))
 
             switchSpeedMed.setOnCheckedChangeListener { buttonView, isChecked ->
-                slideSpeedMed.isVisible = isChecked;
-                tvSpeedMed.isVisible = isChecked;
-                slideTempMed.isVisible = isChecked;
-                tvTempMed.isVisible = isChecked;
-                changeStateFAB();
+                slideSpeedMed.isVisible = isChecked
+                tvSpeedMed.isVisible = isChecked
+                slideTempMed.isVisible = isChecked
+                tvTempMed.isVisible = isChecked
+                changeStateFAB()
             }
 
             switchSpeedMax.setOnCheckedChangeListener { buttonView, isChecked ->
-                slideSpeedMax.isVisible = isChecked;
-                tvSpeedMax.isVisible = isChecked;
-                slideTempMax.isVisible = isChecked;
-                tvTempMax.isVisible = isChecked;
-                changeStateFAB();
+                slideSpeedMax.isVisible = isChecked
+                tvSpeedMax.isVisible = isChecked
+                slideTempMax.isVisible = isChecked
+                tvTempMax.isVisible = isChecked
+                changeStateFAB()
             }
 
-            switchSpeedMed.isChecked = true;
-            switchSpeedMax.isChecked = true;
+            switchSpeedMed.isChecked = true
+            switchSpeedMax.isChecked = true
 
             val materialNames = listOf("ABS", "ASA", "HIPS", "PETG", "PLA", "PLA+", "TPU")
             val adapter = ArrayAdapter(this@MainActivity, R.layout.simple_dropdown_item_1line, materialNames)
