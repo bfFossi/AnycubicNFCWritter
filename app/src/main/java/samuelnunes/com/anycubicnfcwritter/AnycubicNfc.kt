@@ -100,9 +100,9 @@ fun Int.toHex(): String = this.toString(16).uppercase()
 
 fun Float.toHexH(enabled:Boolean): String {
     if (enabled) {
-        var value : Int = this.toInt()
-        var testL : String = "%02x".format((value and 0xFF))
-        var testH : String = "%02x".format(( (value shr(8)) and 0xFF) )
+        val value : Int = this.toInt()
+        val testL : String = "%02x".format((value and 0xFF))
+        val testH : String = "%02x".format(( (value shr(8)) and 0xFF) )
         return testL+":"+testH
     } else {return "00:00"}
 }
