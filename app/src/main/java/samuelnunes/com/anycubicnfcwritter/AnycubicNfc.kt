@@ -1,7 +1,7 @@
 package samuelnunes.com.anycubicnfcwritter
 
 import android.util.Log
-
+import java.lang.reflect.Constructor
 
 
 const val FILAMENT_DIAM = 1.75
@@ -55,7 +55,7 @@ fun nfcMapper(spool: Spool): String {
         A2:07:31:30:32:00,
         A2:08:00:00:00:00,
         A2:09:00:00:00:00,
-        A2:0A:41:43:00:00,
+        A2:0A:4F:57:4E:00,
         A2:0B:00:00:00:00,
         A2:0C:00:00:00:00,
         A2:0D:00:00:00:00,

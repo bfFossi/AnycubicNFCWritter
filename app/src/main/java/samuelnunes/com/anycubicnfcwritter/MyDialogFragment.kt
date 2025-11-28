@@ -51,6 +51,7 @@ class MyDialogFragment : DialogFragment() {
 
     fun setCurrentSpool(spool: Spool) {
         this.spool = spool
+
     }
 
     private fun nfcError() {
@@ -80,7 +81,7 @@ class MyDialogFragment : DialogFragment() {
                 val lines = hexStuff.split(",")
                 for (line in lines) {
                     val bytes = line.trim().split(":").map { it.toInt(16).toByte() }.toByteArray()
-                    nfca.transceive(bytes) // Envia os dados para a tag
+                    nfca.transceive(bytes) // Sendet die Daten an das Tag
                 }
                 Log.i("NFCWrite", "Data saved successfully!")
                 nfcSuccess()

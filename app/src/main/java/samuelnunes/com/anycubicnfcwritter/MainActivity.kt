@@ -4,6 +4,7 @@ import android.R
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.NfcA
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.slider.RangeSlider
+import com.google.android.material.slider.Slider
 import com.skydoves.colorpickerview.flag.BubbleFlag
 import samuelnunes.com.anycubicnfcwritter.databinding.ActivityMainBinding
 
@@ -40,10 +42,55 @@ class MainActivity : AppCompatActivity() {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
         if (nfcAdapter == null) {
-            Toast.makeText(this, "NFC não disponível", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "NFC not available", Toast.LENGTH_LONG).show()
             finish()
         }
+
         onSetupFields()
+
+    }
+    override fun onStop() {
+        super.onStop()
+
+        changeStateFAB()
+
+        val mySPR = getSharedPreferences("AnycubicNFC",0)
+        var editor = mySPR.edit()
+
+        editor.putFloat("1_HotMinSpeed",spool.firstIntervalHotendTemp.speedMin)
+        editor.putFloat("1_HotMaxSpeed",spool.firstIntervalHotendTemp.speedMax)
+        editor.putFloat("2_HotMinSpeed",spool.secondIntervalHotendTemp.speedMin)
+        editor.putFloat("2_HotMaxSpeed",spool.secondIntervalHotendTemp.speedMax)
+        editor.putFloat("3_HotMinSpeed",spool.thirdIntervalHotendTemp.speedMin)
+        editor.putFloat("3_HotMaxSpeed",spool.thirdIntervalHotendTemp.speedMax)
+
+        editor.putFloat("1_HotMinTemp",spool.firstIntervalHotendTemp.temperatureMin)
+        editor.putFloat("1_HotMaxTemp",spool.firstIntervalHotendTemp.temperatureMax)
+        editor.putFloat("2_HotMinTemp",spool.secondIntervalHotendTemp.temperatureMin)
+        editor.putFloat("2_HotMaxTemp",spool.secondIntervalHotendTemp.temperatureMax)
+        editor.putFloat("3_HotMinTemp",spool.thirdIntervalHotendTemp.temperatureMin)
+        editor.putFloat("3_HotMaxTemp",spool.thirdIntervalHotendTemp.temperatureMax)
+
+        editor.putBoolean("switchSpeedMed",spool.secondIntervalHotendTemp.enabled)
+        editor.putBoolean("switchSpeedMax",spool.thirdIntervalHotendTemp.enabled)
+
+        editor.putString("Material",spool.material);
+
+        editor.putFloat("BedMinTemp",spool.bedTemp.temperatureMin)
+        editor.putFloat("BedMaxTemp",spool.bedTemp.temperatureMax)
+
+        //val aInt = binding.hexColor.color
+        editor.putString("a_Color","%02x".format(spool.hexColor.a).uppercase())
+        editor.putString("g_Color","%02x".format(spool.hexColor.g).uppercase())
+        editor.putString("b_Color","%02x".format(spool.hexColor.b).uppercase())
+        editor.putString("r_Color","%02x".format(spool.hexColor.r).uppercase())
+
+        editor.commit()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     private fun onSetupFields() {
@@ -72,6 +119,22 @@ class MainActivity : AppCompatActivity() {
                     slideSpeedMed.valueFrom = values[1]
                 }
             })
+
+            slideSpeedMed.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener{
+                override fun onStartTrackingTouch(slider: RangeSlider) {}
+                override fun onStopTrackingTouch(slider: RangeSlider) {
+                    val values = slider.values
+                    if(slideSpeedMax.values[0] < values[1]) {
+                        slideSpeedMax.values = listOf(values[1], slideSpeedMax.values[1])
+                    }
+                    slideSpeedMax.valueFrom = values[1]
+                    slideSpeedMin.valueTo = values[0]
+                }
+            })
+
+            //val mySlider = findViewById<RangeSlider>(R.id.slide_speed_med)
+
+//            slideSpeedMed.values = listOf(123f, 456f)
 
             slideSpeedMax.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener{
                 override fun onStartTrackingTouch(slider: RangeSlider) {}
@@ -125,6 +188,55 @@ class MainActivity : AppCompatActivity() {
                     show(supportFragmentManager, "Diag")
                 }
             }
+
+            // gespeicherte Werte wieder herstellen
+            val mySPR = getSharedPreferences("AnycubicNFC",0)
+
+            var sl_min = mySPR.getFloat("1_HotMinSpeed",slideSpeedMin.valueFrom)
+            var sl_max = mySPR.getFloat("1_HotMaxSpeed", slideSpeedMin.valueTo)
+
+            slideSpeedMin.valueTo = sl_max
+            slideSpeedMed.valueFrom = sl_max
+            slideSpeedMin.setValues(sl_min,sl_max)
+
+            sl_min = mySPR.getFloat("2_HotMinSpeed",slideSpeedMed.valueFrom)
+            sl_max = mySPR.getFloat("2_HotMaxSpeed", slideSpeedMed.valueTo)
+
+            slideSpeedMin.valueTo = sl_min // Bereich vergrößern
+            slideSpeedMed.valueTo = sl_max
+            slideSpeedMax.valueFrom = sl_max
+            slideSpeedMed.setValues(sl_min,sl_max)
+
+            sl_min = mySPR.getFloat("3_HotMinSpeed",slideSpeedMax.valueFrom)
+            sl_max = mySPR.getFloat("4_HotMaxSpeed", slideSpeedMax.valueTo)
+
+            slideSpeedMed.valueTo = sl_min
+            slideSpeedMax.setValues(sl_min,sl_max)
+
+
+            slideTempMin.setValues(mySPR.getFloat("1_HotMinTemp",slideTempMin.valueFrom),
+                                   mySPR.getFloat("1_HotMaxTemp", slideTempMin.valueTo))
+            slideTempMed.setValues(mySPR.getFloat("2_HotMinTemp",slideTempMed.valueFrom),
+                                   mySPR.getFloat("2_HotMaxTemp", slideTempMed.valueTo))
+            slideTempMax.setValues(mySPR.getFloat("3_HotMinTemp",slideTempMax.valueFrom),
+                                   mySPR.getFloat("3_HotMaxTemp", slideTempMax.valueTo))
+
+            slideBedTemp.setValues(mySPR.getFloat("BedMinTemp",slideBedTemp.valueFrom),mySPR.getFloat("BedMaxTemp",slideBedTemp.valueTo))
+
+            tvMaterialName.setText(mySPR.getString("Material",""))
+
+            switchSpeedMed.isChecked = mySPR.getBoolean("switchSpeedMed",true)
+            switchSpeedMax.isChecked = mySPR.getBoolean("switchSpeedMax",true)
+
+            val a = mySPR.getString("a_Color","00")
+            val g = mySPR.getString("g_Color","00")
+            val r = mySPR.getString("r_Color","00")
+            val b = mySPR.getString("b_Color","00")
+
+            etColor.setText("#"+a+r+g+b)
+
+            changeStateFAB()
+
         }
     }
 
@@ -176,7 +288,7 @@ class MainActivity : AppCompatActivity() {
                 intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
             }?.let { dialog?.writeNFC(it) }
         } else {
-            Toast.makeText(this, "Preencha os campos de cadastro primeiro", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Fill in the registration fields first", Toast.LENGTH_LONG).show()
         }
     }
 
