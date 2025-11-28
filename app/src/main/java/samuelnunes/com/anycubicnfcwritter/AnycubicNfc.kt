@@ -5,16 +5,18 @@ import java.lang.reflect.Constructor
 
 
 const val FILAMENT_DIAM = 1.75
+/*
 const val HOTEND_TEMP_MIN = 240
 const val HOTEND_TEMP_MAX = 260
 const val BED_TEMP_MIN = 90
 const val BED_TEMP_MAX = 115
+*/
 
 data class ARGB(val a: Int, val r: Int, val g: Int, val b: Int) {
     constructor(array: IntArray) : this(array[0],array[1],array[2],array[3])
 }
 
-var secondMask : Int = 0
+// var secondMask : Int = 0
 
 data class Spool(
     val hexColor: ARGB,

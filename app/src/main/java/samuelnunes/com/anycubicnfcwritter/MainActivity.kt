@@ -4,21 +4,18 @@ import android.R
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.SharedPreferences
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.NfcA
 import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
 import com.skydoves.colorpickerview.flag.BubbleFlag
 import samuelnunes.com.anycubicnfcwritter.databinding.ActivityMainBinding
 
@@ -55,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         changeStateFAB()
 
         val mySPR = getSharedPreferences("AnycubicNFC",0)
-        var editor = mySPR.edit()
+        val editor = mySPR.edit()
 
         editor.putFloat("1_HotMinSpeed",spool.firstIntervalHotendTemp.speedMin)
         editor.putFloat("1_HotMaxSpeed",spool.firstIntervalHotendTemp.speedMax)
@@ -74,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("switchSpeedMed",spool.secondIntervalHotendTemp.enabled)
         editor.putBoolean("switchSpeedMax",spool.thirdIntervalHotendTemp.enabled)
 
-        editor.putString("Material",spool.material);
+        editor.putString("Material",spool.material)
 
         editor.putFloat("BedMinTemp",spool.bedTemp.temperatureMin)
         editor.putFloat("BedMaxTemp",spool.bedTemp.temperatureMax)
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         editor.putString("b_Color","%02x".format(spool.hexColor.b).uppercase())
         editor.putString("r_Color","%02x".format(spool.hexColor.r).uppercase())
 
-        editor.commit()
+        editor.apply()
 
     }
 
