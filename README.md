@@ -29,8 +29,8 @@ https://www.reddit.com/r/anycubic/comments/1g047ad/ace_pro_nfc_tag_research_crea
 |[ 48:69:67:68 ] Sektor 10 : DATA|High|type
 |[ 3F:53:70:65 ] Sektor 11 : DATA|?Spe|type
 |[ 65:64:00:00 ] Sektor 12 : DATA|ed|type
-|[ 00:00:00:00 ] Sektor 13 : DATA
-|[ FF:00:06:E1 ] Sektor 14 : DATA
+|[ 00:00:00:00 ] Sektor 13 : DATA||type
+|[ FF:00:06:E1 ] Sektor 14 : DATA||color
 |[ 00:00:00:00 ] Sektor 15 : DATA
 |[ 00:00:00:00 ] Sektor 16 : DATA
 |[ 32:00:96:00 ] Sektor 17 : DATA|50-150|printing speed 1 in mm/s
