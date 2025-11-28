@@ -25,11 +25,11 @@ https://www.reddit.com/r/anycubic/comments/1g047ad/ace_pro_nfc_tag_research_crea
 |[ 00:00:00:00 ] Sektor 0C : DATA||brand
 |[ 00:00:00:00 ] Sektor 0D : DATA
 |[ 00:00:00:00 ] Sektor 0E : DATA
-|[ 50:4C:41:3F ] Sektor 0F : DATA|PLA?|type
-|[ 48:69:67:68 ] Sektor 10 : DATA|High|type
-|[ 3F:53:70:65 ] Sektor 11 : DATA|?Spe|type
-|[ 65:64:00:00 ] Sektor 12 : DATA|ed|type
-|[ 00:00:00:00 ] Sektor 13 : DATA||type
+|[ 50:4C:41:3F ] Sektor 0F : DATA|PLA?|type / material name
+|[ 48:69:67:68 ] Sektor 10 : DATA|High|type / material name
+|[ 3F:53:70:65 ] Sektor 11 : DATA|?Spe|type / material name
+|[ 65:64:00:00 ] Sektor 12 : DATA|ed|type / material name
+|[ 00:00:00:00 ] Sektor 13 : DATA||type / material name
 |[ FF:00:06:E1 ] Sektor 14 : DATA||color
 |[ 00:00:00:00 ] Sektor 15 : DATA
 |[ 00:00:00:00 ] Sektor 16 : DATA
