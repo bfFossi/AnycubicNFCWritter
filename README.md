@@ -1,7 +1,6 @@
 ## This app can be used to create NFC tags for automatic filament recognition in an ACE-Pro from Anycubic.
 
-<img src="\anycubicnfcwriter.jpg" alt="appimage" width="25%">
-![App-Image](/anycubicnfcwriter.jpg "This is a appimage.")
+<img src="\anycubicnfcwriter.jpg" alt="appimage" width="10%">
 
 ### The realisation is based on: 
 https://www.reddit.com/r/anycubic/comments/1g047ad/ace_pro_nfc_tag_research_create_own_tags/
