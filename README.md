@@ -1,5 +1,6 @@
 ## This app can be used to create NFC tags for automatic filament recognition in an ACE-Pro from Anycubic.
 
+<img src="\anycubicnfcwriter.jpg" alt="appimage" width="25%">
 ![App-Image](/anycubicnfcwriter.jpg "This is a appimage.")
 
 ### The realisation is based on: 
