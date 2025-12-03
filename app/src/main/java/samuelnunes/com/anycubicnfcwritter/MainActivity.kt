@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity() {
             slideSpeedMed.setValues(sl_min,sl_max)
 
             sl_min = mySPR.getFloat("3_HotMinSpeed",slideSpeedMax.valueFrom)
-            sl_max = mySPR.getFloat("4_HotMaxSpeed", slideSpeedMax.valueTo)
+            sl_max = mySPR.getFloat("3_HotMaxSpeed", slideSpeedMax.valueTo)
 
             slideSpeedMed.valueTo = sl_min
             slideSpeedMax.setValues(sl_min,sl_max)
@@ -231,6 +231,14 @@ class MainActivity : AppCompatActivity() {
             val b = mySPR.getString("b_Color","00")
 
             etColor.setText("#"+a+r+g+b)
+
+            // Nur so aktualisieren sich die Slider korrekt :-(
+            slideSpeedMin.setValues(slideSpeedMin.values[0]+1,slideSpeedMin.values[1])
+            slideSpeedMin.setValues(slideSpeedMin.values[0]-1,slideSpeedMin.values[1])
+            slideSpeedMed.setValues(slideSpeedMed.values[0]+1,slideSpeedMed.values[1])
+            slideSpeedMed.setValues(slideSpeedMed.values[0]-1,slideSpeedMed.values[1])
+            slideSpeedMax.setValues(slideSpeedMax.values[0]+1,slideSpeedMax.values[1])
+            slideSpeedMax.setValues(slideSpeedMax.values[0]-1,slideSpeedMax.values[1])
 
             changeStateFAB()
 
